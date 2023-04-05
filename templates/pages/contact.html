@@ -1,0 +1,28 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+
+<section class="bg-white dark:bg-gray-900">
+    <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
+        <h2 class="mb-4 text-2xl tracking-tight  text-center text-gray-800 dark:text-white">Bize Ulaşın</h2>
+        <p class="mb-8 lg:mb-16 font-light text-center text-gray-500 dark:text-gray-400 sm:text-xl">Herhangi öneriniz varsa veya bir hata ile karşılaştıysanız bize yazın</p>
+        <form action="#" class="space-y-8" method="post">
+            {% csrf_token %}
+            <div>
+
+                
+                {{ form.as_p }}
+            </div>
+            
+            <div class="flex justify-center">
+            <button type="submit"
+                class=" mt-7 rounded-full inline-block rounded bg-sky-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+                data-te-ripple-init data-te-ripple-color="light">
+                Mesajı Gönder
+            </button>
+            </div>
+        </form>
+    </div>
+  </section>
+
+
+{% endblock %}

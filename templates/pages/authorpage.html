@@ -1,0 +1,80 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+{% if detailAuthor %}
+{% for detailauth in detailAuthor.all %}
+<div class="max-w-7xl mx-auto md:flex items-start justify-center py-12 2xl:px-20 md:px-6 px-4">
+  <div class="xl:w-2/6 lg:w-2/5 w-80">
+    <img class="w-full" alt="image of a girl posing" src="{{detailauth.photo.url}}" />
+  </div>
+
+  <div class="xl:w-2/5 md:w-1/2 lg:ml-8 md:ml-6 md:mt-0 mt-6">
+    <div class="border-b border-gray-200 pb-6">
+      <p class="text-sm leading-none text-gray-600 dark:text-gray-300">
+        polarizasyon.com yazarı {{detailauth.user.username}}
+      </p>
+      <h1 class="lg:text-2xl text-xl font-semibold lg:leading-6 leading-7 text-gray-800 dark:text-white mt-2 capitalize">
+        {{detailauth.user.first_name}} {{detailauth.user.last_name}}
+      </h1>
+    </div>
+
+    <div class="py-4 border-b border-gray-200 flex items-center justify-between">
+      <p class="text-base leading-4 text-gray-800 dark:text-gray-300">
+        Doğum Tarihi
+      </p>
+      <div class="flex items-center justify-center">
+        <p class="text-sm leading-none text-gray-600 dark:text-gray-300 mr-3">
+          {{detailauth.birthyear}}
+        </p>
+      </div>
+    </div>
+    <h1 class="lg:text-2xl text-xl font-semibold lg:leading-6 leading-7 text-gray-800 dark:text-white mt-2">
+      Yazar Biografisi
+    </h1>
+    <div>
+      <p class="xl:pr-48 text-base lg:leading-tight leading-normal text-gray-600 dark:text-gray-300 mt-7">
+        {{detailauth.bio}}
+      </p>
+      {% for links in detailauth.social.all %}
+      <p class="text-base leading-4 mt-7 text-gray-600 dark:text-gray-300">
+        {{ links.title}}: <a href="{{ links.url}}"> {{ links.alias}}</a>
+      </p>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+
+<div class="flex flex-wrap justify-center mx-auto max-w-screen-xl">
+  {% for bloglinks in detailauth.authors.all %}
+  <div class="flex justify-center">
+    <div class="flex flex-col rounded-lg bg-white shadow-lg dark:bg-neutral-700 md:max-w-xl md:flex-row m-4">
+      <img class="h-96 w-full rounded-t-lg object-cover md:h-auto md:w-48 md:rounded-none md:rounded-l-lg"
+        src="{{ bloglinks.thumbnail.url}}" alt="" />
+      <div class="flex flex-col justify-start p-6">
+        <h5 class="mb-2 text-xl font-medium text-neutral-800 dark:text-neutral-50">
+          {{ bloglinks.title}}
+        </h5>
+        <p class="mb-4 text-base text-neutral-600 dark:text-neutral-200">
+          {{ bloglinks.context|truncatechars:120}}
+        </p>
+        <p class="text-xs text-neutral-500 dark:text-neutral-300">
+          {{ bloglinks.created_at|date:'Y-m-d '}}
+        </p>
+
+        <a href="{% url 'detail' bloglinks.slug %}"><button type="button"
+          class=" mt-7 rounded-full inline-block rounded bg-sky-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+          data-te-ripple-init data-te-ripple-color="light">
+          Read More
+      </button></a> 
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+ 
+</div>
+{% endfor %}
+{% endif %}
+
+<script></script>
+
+{% endblock %}

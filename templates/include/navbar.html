@@ -1,0 +1,119 @@
+{% load static %}
+
+<nav
+  class="p-5 bg-gray-200 shadow sticky top-0 z-50 shadow md:flex md:items-center md:justify-between rounded-full mx-10 my-5"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center">
+      <span class="text-2xl font-[Poppins] cursor-pointer mb-5">
+        <img class="h-10 inline rounded-full" src="{% static 'images/icon.png' %}" />
+        Polarizasyon
+      </span>
+      <span class="text-md font-[Poppins] cursor-pointer mb-5"> </span>
+
+      <span class="text-3xl cursor-pointer mx-2 md:hidden block">
+        <ion-icon name="menu" onclick="Menu(this)"></ion-icon>
+      </span>
+    </div>
+
+    <ul
+      class="md:flex md:items-center z-[-1] md:z-auto md:static absolute bg-gray-200 w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7 md:opacity-100 opacity-0 top-[-500px] transition-all ease-in duration-500 rounded-full"
+    >
+      <div class="flex justify-center">
+        <li class="mx-4 my-6 md:my-0 md:mx-2">
+          <a
+            href="{% url 'home'  %}"
+            class="text-sm hover:text-cyan-500 duration-500 uppercase tracking-widest"
+            >Ana Sayfa</a
+          >
+        </li>
+        
+        
+        <li class="mx-4 my-6 md:my-0 md:mx-2">
+          <a
+            href="{% url 'contact'  %}"
+            class="text-sm hover:text-cyan-500 duration-500 uppercase tracking-widest"
+            >İletişim</a
+          >
+        </li>
+      </div>
+
+      <div class="flex justify-center m-4">
+        <div class="xl:w-84 ml-5 lg:w-48 md:w-20">
+          <form action="{% url 'search' %}"   method="GET">
+            {% csrf_token %}
+          <div class="relative flex w-full flex-wrap items-stretch">
+            <input
+              type="search"
+              class="bg-white rounded-full relative m-0 -mr-px block w-[1%] min-w-0 flex-auto border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-1.5 text-base font-normal text-neutral-700 outline-none transition duration-300 ease-in-out focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:text-neutral-200 dark:placeholder:text-neutral-200"
+              placeholder="Search"
+              aria-label="Search"
+              aria-describedby="button-addon1"
+              name="keyword"
+              required
+            />
+            <button
+              class="rounded-full bg-cyan-400 relative z-[2] flex items-center px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
+              type="submit"
+              id="button-addon1"
+              data-te-ripple-init
+              data-te-ripple-color="light"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                class="h-5 w-5"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+          </div>
+        </form>
+        </div>
+      </div>
+
+      <div class="flex justify-center ml-5">
+        {% if user.is_authenticated %}
+
+        <a href="{% url 'logout' %}"><button
+          class="flex bg-red-400 text-white font-[Poppins] duration-500 px-6 py-2 mx-1 hover:bg-red-600 hover:text-black rounded-full hover:animate-bounce"
+        >
+          Logout
+        </button></a> 
+        {% if user.is_author %}
+        <a href="{% url 'dashboard' %}"><button
+          class="flex bg-stone-400 text-white font-[Poppins] duration-500 px-6 py-2 mx-1 hover:bg-stone-600 hover:text-black rounded-full hover:animate-bounce"
+        >
+          Dashboard
+        </button></a>
+        {% endif %}
+        {% else %}
+        <a class="" href="{% url 'login' %}"><button
+          class="flex bg-sky-400 text-white font-[Poppins] duration-500 px-6 py-2 mx-1 hover:bg-sky-600 hover:text-black rounded-full hover:animate-bounce"
+        >
+          Login
+        </button></a> 
+        <a href="{% url 'register' %}"><button
+          class="flex bg-blue-400 text-white font-[Poppins] duration-500 px-6 py-2 mx-1 hover:bg-blue-600 hover:text-black rounded-full hover:animate-bounce"
+        >
+          Register
+        </button></a> 
+        {% endif %}
+      </div>
+      <h2 class=""></h2>
+    </ul>
+  </div>
+</nav>
+
+
+<script>
+    function Menu(e) {
+        let list = document.querySelector('ul');
+        e.name === 'menu' ? (e.name = "close", list.classList.add('top-[80px]'), list.classList.add('opacity-100')) : (e.name = "menu", list.classList.remove('top-[80px]'), list.classList.remove('opacity-100'))
+    }
+</script>

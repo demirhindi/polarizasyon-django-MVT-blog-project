@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml" lang="en">
+
+<head><link rel="stylesheet" type="text/css" hs-webfonts="true" href="https://fonts.googleapis.com/css?family=Lato|Lato:i,b,bi">
+    <meta property="og:title" content="Email template">  
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <style type="text/css">
+      #email {
+        margin: auto;
+        width: 600px;
+        background-color: white;
+      }  
+      .activate-btn{
+        font: inherit;
+        background-color: #343a40;
+        border: none;
+        padding: 10px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 900;
+        border-radius: 5px; 
+        text-decoration: none;
+      }      
+    </style>    
+  </head>    
+<body bgcolor="#F5F8FA" style="width: 100%; margin: auto 0; padding:0; font-family:Lato, sans-serif; font-size:16px; color:#33475B; word-break:break-word">
+  
+<div id="email">
+  <table role="presentation" width="100%">
+    <tr>
+    <td  align="center" style="color: white;">
+     
+      </td>
+  </table>
+
+
+  <table bgcolor="#B6A98F" width="100%" role="presentation" border="0" cellpadding="0" cellspacing="10px" style="padding: 30px 30px 60px 60px;">
+    <tr>
+      <td>
+        <h2 style="text-align: center;">Activate Your Account</h2>
+        <p style="text-align: center;">Please verify your email address to activate your account.</p>
+        <div style="text-align: center;">
+          <a href="http://{{domain}}{% url 'activate' uidb64=uid token=token %}" class="activate-btn" style="color: #fff;">Activate Now</a>
+        </div>
+      </td> 
+    </tr>
+  </table>
+
+  <table role="presentation" bgcolor="#343a40" width="100%">
+      <tr>
+        <td align="center" style="padding: 15px 15px; color: #fff;">
+          <p>© {% now "Y" %} Polarizasyon, All Rights Reserved.</p>
+          <a href="http://{{domain}}" style="color:#fff;">Visit Website</a>      
+        </td>
+      </tr>
+  </table> 
+</div>
+
+
+<!--<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+  <div id="email">
+    <table class="w-full" role="presentation">
+      <tr>
+      <td  class="text-white" align="center">
+  bash
+  Copy code
+    </td>
+    </table>
+    <table class="bg-yellow-400 w-full" role="presentation" border="0" cellpadding="0" cellspacing="10" style="padding: 30px 30px 60px 60px;">
+      <tr>
+        <td>
+          <h2 class="text-center">Activate Your Account</h2>
+          <p class="text-center">Please verify your email address to activate your account.</p>
+          <div class="text-center">
+            <a href="http://{{domain}}{% url 'activate' uidb64=uid token=token %}" class="px-4 py-2 bg-gray-800 text-white uppercase tracking-wider font-bold rounded-lg no-underline" style="color: #fff;">Activate Now</a>
+          </div>
+        </td> 
+      </tr>
+    </table>
+    <table class="bg-gray-800 w-full" role="presentation">
+        <tr>
+          <td align="center" class="py-3 text-white">
+            <p>© {{ now|date:"Y" }} Your Resume, All Rights Reserved.</p>
+            <a href="http://{{domain}}" class="text-white">Visit Website</a>      
+          </td>
+        </tr>
+    </table> 
+  </div> 
+  </body>-->
+</body>
+</html>

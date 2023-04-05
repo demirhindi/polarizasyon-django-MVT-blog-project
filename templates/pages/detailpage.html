@@ -1,0 +1,206 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src="{% static 'lib/jquery.js' %}" type="text/javascript"></script>
+
+    <script src="{% static 'js/lc_lightbox.lite.js' %}" type="text/javascript"></script>
+    <link rel="stylesheet" href="{% static 'css/lc_lightbox.css' %}" />
+
+
+
+    <!-- SKINS -->
+    <link rel="stylesheet" href="{% static 'skins/minimal.css' %}" />
+
+
+    <!-- ASSETS -->
+    <script src="{% static 'lib/AlloyFinger/alloy_finger.min.js' %}" type="text/javascript"></script>
+
+
+</head>
+
+<style> 
+    
+</style>
+
+
+<div class="px-4 sm:px-6 md:px-8">
+    <div class="max-w-3xl mx-auto pb-28">
+        <main>
+            <article class="relative pt-10">
+                <h1 class="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-slate-200 md:text-3xl capitalize ">
+                {% if detailBlog %}
+                {% for detailBlo in detailBlog.all %}
+                {{detailBlo.title}}&nbsp;{% for cat in detailBlo.category.all %} <a href="{% url 'category' cat.slug %}" class=" text-base text-sky-500 hover:text-sky-600 dark:text-sky-400"> {{ cat.title }} </a> {% endfor %}</h1>
+                
+                <div class="text-sm leading-6">
+                    <dl>
+                        <dt class="sr-only">Date</dt>
+                        <dd class="absolute top-0 inset-x-0 text-slate-700 dark:text-slate-400"><time
+                                datetime="2020-07-13T16:35:02.037Z">{{detailBlo.created_field|date:'Y-m-d '}}</time></dd>
+                    </dl>
+                </div>
+                    {% for auth in detailBlo.author.all %}
+                <div class="mt-6">
+                    <ul class="flex flex-wrap text-sm leading-6 -mt-6 -mx-5">
+                        <li class="flex items-center font-medium whitespace-nowrap px-5 mt-6"><img
+                                src= "{{ auth.photo.url }}" alt=""
+                                class="mr-3 w-9 h-9 rounded-full bg-slate-50 dark:bg-slate-800" decoding="async">
+                            <div class="text-base leading-4 capitalize">
+                                <div class="text-slate-900 dark:text-slate-200">{{ auth.user.first_name }} {{ auth.user.last_name }}</div> 
+                                <hr>
+                                <a href="{% url 'author' auth.slug %}"  class=" text-sm text-sky-500 hover:text-sky-600 dark:text-sky-400"> {{ auth.user.username }} </a>
+                                {% for links in auth.social.all %}
+                                <div class="mt-1"><a href="{{ links.url}}"
+                                        class="text-sky-500 hover:text-sky-600 dark:text-sky-400"> {{ links.alias}}
+                                        
+                                        
+                                        
+                                    
+                                    
+                                    </a>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                    {% endfor %}
+                
+                <div class="mt-12 prose prose-slate dark:prose-dark">
+                   
+                    <img src="{{detailBlo.thumbnail.url}}" alt="" class="mb-6">
+                    <p class="lead text-justify first-letter:text-4xl">{{detailBlo.context|urlize|linebreaksbr }}</p>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+
+
+
+
+<div class="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-3xl mx-auto justify-center">
+    {% if detailimage %}
+    {% for detailimg in detailimage.all %}
+   
+
+    
+        <a class="elem" href="{{detailimg.image.url}}" data-aos="zoom-in" 
+            data-lcl-thumb="{{detailimg.image.url}}">
+            <span class="block bg-cover bg-center h-56"
+                style="background-image: url({{detailimg.image.url}});"></span>
+            
+        </a>
+   
+    
+    
+    {% endfor %}
+    {% endif %}
+
+</div>
+
+
+
+<section class="bg-white dark:bg-gray-900 py-8 lg:py-16">
+    <div class="max-w-2xl mx-auto px-4">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">Yorumlar ({{ commentsCount }})</h2>
+      </div>
+      <form class="mb-6" method="POST">
+        {% csrf_token %}
+                                       
+          <div class="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+              <label for="comment" class="sr-only">Your comment</label>
+              {{ forms.as_p }}
+          </div>
+          {% if user.is_authenticated %}
+          <button
+          type="submit"
+          class="mt-7 rounded-full inline-block rounded bg-sky-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+          data-te-ripple-init
+          data-te-ripple-color="light"
+        >
+          Send Comment
+        </button>
+        {% endif %}
+      </form>
+
+      {% if comments %}
+      {% for comment in comments %}
+      <article class="p-6 mb-6 text-base bg-white rounded-lg dark:bg-gray-900">
+          <footer class="flex justify-between items-center mb-2">
+              <div class="flex items-center">
+                  <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white capitalize">
+                   {{ comment.user.first_name }}  {{ comment.user.last_name }}</p>
+                  
+                          <p class="text-sm text-gray-600 dark:text-gray-400"><time pubdate datetime="{{ comment.date }}"
+                          title="{{ comment.date }}">{{ comment.date }}</time></p>
+              </div>
+              <button id="dropdownComment1Button" data-dropdown-toggle="dropdownComment1"
+                  class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                  type="button">
+                  <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                          d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z">
+                      </path>
+                  </svg>
+                  <span class="sr-only">Comment settings</span>
+              </button>
+              <!-- Dropdown menu -->
+              <div id="dropdownComment1"
+                  class="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+                  <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
+                      aria-labelledby="dropdownMenuIconHorizontalButton">
+                      <li>
+                          <a href="#"
+                              class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                      </li>
+                      <li>
+                          <a href="#"
+                              class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Remove</a>
+                      </li>
+                      <li>
+                          <a href="#"
+                              class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Report</a>
+                      </li>
+                  </ul>
+              </div>
+          </footer>
+          <p class="text-gray-500 dark:text-gray-400">{{ comment.body }}</p>
+         
+      </article>
+      {% endfor %}
+      {% endif %}
+      
+      
+    </div>
+  </section>
+   
+
+
+
+
+ <script type="text/javascript">
+    $(document).ready(function(e) {
+       
+      // live handler
+      lc_lightbox('.elem', {
+        wrap_class: 'lcl_fade_oc',
+        gallery : true,	
+        thumb_attr: 'data-lcl-thumb', 
+        
+        skin: 'minimal',
+        radius: 0,
+        padding	: 0,
+        border_w: 0,
+      });	
+    
+    });
+    </script>
+
+{% endblock %}
